@@ -22,7 +22,8 @@ class ByteBanck extends StatelessWidget {
         ),
         buttonTheme: ButtonThemeData(
             buttonColor: Colors.blueAccent.shade700,
-            textTheme: ButtonTextTheme.primary),
+            textTheme: ButtonTextTheme.primary,
+        ),
       ),
       home: const Dashboard(title: 'Dashboard'),
     );
