@@ -1,9 +1,15 @@
+import 'package:byte_banck/database/app_database.dart';
 import 'package:flutter/material.dart';
 
-import 'dashboard.dart';
+import 'screans/dashboard.dart';
 
 void main() {
   runApp(const ByteBanck());
+
+  findAll().then((value) {
+    debugPrint(value.toString());
+  });
+
 }
 
 class ByteBanck extends StatelessWidget {

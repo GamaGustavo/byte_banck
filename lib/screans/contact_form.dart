@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'models/contact.dart';
+import '../models/contact.dart';
 
 class ContactForm extends StatefulWidget {
   const ContactForm({Key? key}) : super(key: key);
@@ -61,7 +61,7 @@ class _ContactFormState extends State<ContactForm> {
                 onPressed: () {
                   final String fullName = _fullName.text;
                   final int acountNumbe = int.parse(_acountNumber.text);
-                  Navigator.of(context).pop(Contact(fullName,acountNumbe));
+                  Navigator.of(context).pop(Contact(0,fullName,acountNumbe));
                 },
                 child: const Text('Create'),
               ),
