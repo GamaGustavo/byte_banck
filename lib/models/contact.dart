@@ -1,13 +1,13 @@
 class Contact {
-  final int id;
+  final int? id;
   final String fullName;
   final int accountNumber;
 
-  Contact(
+  Contact({
     this.id,
-    this.fullName,
-    this.accountNumber,
-  );
+    required this.fullName,
+    required this.accountNumber,
+  });
 
   @override
   String toString() {

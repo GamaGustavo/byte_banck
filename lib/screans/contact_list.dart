@@ -1,4 +1,4 @@
-import 'package:byte_banck/database/app_database.dart';
+import 'package:byte_banck/database/dao/contact_dao.dart';
 import 'package:byte_banck/models/contact.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +12,8 @@ class ContactsList extends StatefulWidget {
 }
 
 class _ContactsListState extends State<ContactsList> {
+  final ContactDao _contactDao = ContactDao();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,25 +21,14 @@ class _ContactsListState extends State<ContactsList> {
         title: const Text("Contacts"),
       ),
       body: FutureBuilder<List<Contact>>(
-        future: findAll(),
+        future: _contactDao.findAll(),
         initialData: const [],
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
               break;
             case ConnectionState.waiting:
-              return Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                    const Text('Loading'),
-                  ],
-                ),
-              );
+              return const _LoadItens();
             case ConnectionState.active:
               break;
             case ConnectionState.done:
@@ -55,14 +46,36 @@ class _ContactsListState extends State<ContactsList> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const ContactForm(),
-            ),
-          ).then((value) => setState((){}));
-        }
+          child: const Icon(Icons.add),
+          onPressed: () {
+            Navigator.of(context)
+                .push(
+                  MaterialPageRoute(
+                    builder: (context) => const ContactForm(),
+                  ),
+                )
+                .then((value) => setState(() {}));
+          }),
+    );
+  }
+}
+
+class _LoadItens extends StatelessWidget {
+  const _LoadItens({Key? key}) : super(key: key);
+  final String loadMessage = 'Loading';
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(
+            color: Theme.of(context).colorScheme.secondary,
+          ),
+          Text(loadMessage),
+        ],
       ),
     );
   }
