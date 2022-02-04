@@ -1,3 +1,4 @@
+import 'package:byte_banck/database/app_database.dart';
 import 'package:flutter/material.dart';
 
 import '../models/contact.dart';
@@ -42,6 +43,7 @@ class _ContactFormState extends State<ContactForm> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                keyboardType: TextInputType.number,
                 controller: _acountNumber,
                 decoration: const InputDecoration(
                   labelText: 'Acount number',
@@ -61,7 +63,7 @@ class _ContactFormState extends State<ContactForm> {
                 onPressed: () {
                   final String fullName = _fullName.text;
                   final int acountNumbe = int.parse(_acountNumber.text);
-                  Navigator.of(context).pop(Contact(0,fullName,acountNumbe));
+                  save(Contact(0,fullName,acountNumbe)).then((id) => Navigator.pop(context));
                 },
                 child: const Text('Create'),
               ),

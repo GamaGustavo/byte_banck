@@ -4,9 +4,14 @@ import 'package:flutter/material.dart';
 
 import 'contact_form.dart';
 
-class ContactsList extends StatelessWidget {
+class ContactsList extends StatefulWidget {
   const ContactsList({Key? key}) : super(key: key);
 
+  @override
+  State<ContactsList> createState() => _ContactsListState();
+}
+
+class _ContactsListState extends State<ContactsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +19,7 @@ class ContactsList extends StatelessWidget {
         title: const Text("Contacts"),
       ),
       body: FutureBuilder<List<Contact>>(
-        future: Future.delayed(const Duration(seconds: 5)).then((value) => findAll()),
+        future: findAll(),
         initialData: const [],
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           switch (snapshot.connectionState) {
@@ -26,7 +31,9 @@ class ContactsList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircularProgressIndicator(color:Theme.of(context).colorScheme.secondary,),
+                    CircularProgressIndicator(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
                     const Text('Loading'),
                   ],
                 ),
@@ -48,16 +55,14 @@ class ContactsList extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context)
-            .push(
-          MaterialPageRoute(
-            builder: (context) => const ContactForm(),
-          ),
-        )
-            .then((value) {
-          debugPrint(value.toString());
-        }),
         child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const ContactForm(),
+            ),
+          ).then((value) => setState((){}));
+        }
       ),
     );
   }
